@@ -3,8 +3,10 @@ package FreitagsaufgabeWeek2;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.Collection;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+
+import static java.util.Map.Entry.comparingByValue;
 
 public class ProductRepoTest {
 
@@ -14,28 +16,36 @@ public class ProductRepoTest {
 
         Product wasser = new Product("Wasser");
         Product cola = new Product("Cola");
-        List<Product> products = List.of(wasser,cola);
+
+        Map<String, Product> products = new HashMap<>();
+
+        products.put(wasser.getId(), wasser);
+        products.put(cola.getId(), cola);
+
         ProductRepo productRepo = new ProductRepo(products);
 
-        Collection<Product> actual = productRepo.list();
+        String actual = productRepo.list().values().toString();
+        String expected = "[Product{id= " + wasser.getId() + " name= Wasser}, Product{id= " + cola.getId() + " name= Cola}]";
 
-        Assertions.assertEquals(2, actual.size());
-        Assertions.assertTrue(actual.containsAll(products));
+        Assertions.assertEquals(expected,actual);
+
+
     }
-
-
 
     @Test
     void shouldGetOneProduct() {
         Product wasser = new Product("Wasser");
         Product cola = new Product("Cola");
 
-        List<Product> products = List.of(wasser, cola);
+        Map<String, Product> products = new HashMap<>();
+
+        products.put(wasser.getId(), wasser);
+        products.put(cola.getId(), cola);
 
         ProductRepo productRepo = new ProductRepo(products);
 
-        String expected = productRepo.getOneProduct(wasser.getId()).toString();
         String actual = productRepo.getOneProduct(wasser.getId()).toString();
-        Assertions.assertEquals(expected, actual);
+        String expected = "Product{id= " + wasser.getId() + " name= Wasser}";
     }
+
 }

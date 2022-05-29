@@ -7,17 +7,15 @@ import java.util.Map;
 
 public class OrderRepo {
 
-    private Map<String, Order> orders;
+    //ArrayList
+    private final Map<String, Order> orders;
 
-    public OrderRepo(List<Order> orders){
-        this.orders = new HashMap<>();
-        for (Order order : orders){
-            this.orders.put(order.getId(), order);
-        }
+    public OrderRepo(Map<String, Order> orders){
+        this.orders = orders;
     }
 
-    public Collection<Order> list(){
-        return orders.values();
+    public Map<String, Order> list(){
+        return orders;
     }
 
     public Order getOneOrder(String key){
@@ -26,12 +24,5 @@ public class OrderRepo {
 
     public void addOneOrder(Order newOrder){
         orders.put(newOrder.getId(), newOrder);
-    }
-
-    @Override
-    public String toString() {
-        return "OrderRepo{" +
-                "orders=" + orders +
-                '}';
     }
 }

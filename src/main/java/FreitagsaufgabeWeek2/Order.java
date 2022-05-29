@@ -4,13 +4,13 @@ import java.util.UUID;
 
 public class Order {
 
-    private String id = UUID.randomUUID().toString();
     private String orderName;
+    private String id;
 
     public Order(String products) {
         this.orderName = products;
+        this.id = UUID.randomUUID().toString();
     }
-
     public String getId() {
         return id;
     }

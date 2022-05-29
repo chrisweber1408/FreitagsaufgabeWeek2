@@ -11,10 +11,6 @@ public class Product {
         this.productName = name;
     }
 
-    public String getProductName() {
-        return productName;
-    }
-
     public String getId() {
         return id;
     }

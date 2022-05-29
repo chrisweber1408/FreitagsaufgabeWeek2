@@ -3,8 +3,8 @@ package FreitagsaufgabeWeek2;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.Collection;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class OrderRepoTest {
 
@@ -14,13 +14,35 @@ public class OrderRepoTest {
 
         Order wasser = new Order("Wasser");
         Order cola = new Order("Cola");
-        List<Order> orders = List.of(wasser,cola);
+
+        Map<String, Order> orders = new HashMap<>();
+
+        orders.put(wasser.getId(), wasser);
+        orders.put(cola.getId(), cola);
+
         OrderRepo orderRepo = new OrderRepo(orders);
 
-        Collection<Order> actual = orderRepo.list();
+        String actual = orderRepo.list().values().toString();
+        String expected = "[Order{id= " + wasser.getId() + " name= Wasser}, Order{id= " + cola.getId() + " name= Cola}]";
 
-        Assertions.assertEquals(2, actual.size());
-        Assertions.assertTrue(actual.containsAll(orders));
+        Assertions.assertEquals(expected,actual);
+    }
+
+    @Test
+    void shouldGetOneOrder() {
+        Order wasser = new Order("Wasser");
+        Order cola = new Order("Cola");
+
+        Map<String, Order> orders = new HashMap<>();
+
+        orders.put(wasser.getId(), wasser);
+        orders.put(cola.getId(), cola);
+
+        OrderRepo orderRepo = new OrderRepo(orders);
+
+        String expected = orderRepo.getOneOrder(wasser.getId()).toString();
+        String actual = orderRepo.getOneOrder(wasser.getId()).toString();
+        Assertions.assertEquals(expected, actual);
     }
 
     @Test
@@ -28,12 +50,19 @@ public class OrderRepoTest {
 
         Order bier = new Order("Bier");
         Order fanta = new Order("Fanta");
-        List<Order> orders = List.of(bier, fanta);
+
+        Map<String, Order> orders = new HashMap<>();
+
+        orders.put(bier.getId(), bier);
+        orders.put(fanta.getId(), fanta);
+
         OrderRepo orderRepo = new OrderRepo(orders);
 
         Order wasser = new Order("Wasser");
         orderRepo.addOneOrder(wasser);
 
+        int actual = orderRepo.list().size();
 
+        Assertions.assertEquals(3,actual);
     }
 }

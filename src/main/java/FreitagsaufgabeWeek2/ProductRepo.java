@@ -4,17 +4,14 @@ import java.util.*;
 
 public class ProductRepo {
 
-    private Map<String, Product> products;
+    private final Map<String, Product> products;
 
-    public ProductRepo(List<Product> products) {
-        this.products = new HashMap<>();
-        for (Product product : products){
-            this.products.put(product.getId(), product);
+    public ProductRepo(Map<String, Product> products) {
+        this.products = products;
         }
-    }
 
-    public Collection<Product> list(){
-        return products.values();
+    public Map<String, Product> list(){
+        return this.products;
     }
 
     public Product getOneProduct(String key){
